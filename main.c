@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:06:10 by yecsong           #+#    #+#             */
-/*   Updated: 2022/10/13 19:42:47 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/10/14 16:00:58 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int argc, char **argv, char **envp)
 	info->path = parsing_path(envp);
 	while (info->i < argc - 3)
 	{
-		exec_cmd(&info, argv);
+		info->cmd_info = valid_cmd(argv[info->i + 2], info->path);
+		pipe_line(&info, argv);
 		info->i++;
 		free_dptr(info->cmd_info);
 	}

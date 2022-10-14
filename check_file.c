@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:17:06 by yecsong           #+#    #+#             */
-/*   Updated: 2022/10/13 19:17:45 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/10/14 15:57:56 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,12 @@ void	free_dptr(char **ptr)
 	free(ptr);
 }
 
-int	valid_file(t_info **info, char **argv)
-{
-	if (access(argv[1], R_OK))
-	{
-		perror("Error : Check input file");
-		exit(1);
-	}
-	if (!access(argv[(*info)->argc - 1], F_OK))
-	{
-		if (access(argv[(*info)->argc - 1], W_OK))
-		{
-			perror("Error : Check output file");
-			return (0);
-		}
-	}
-	return (1);
-}
-
 int	check_file(t_info **info, char **argv)
 {
 	if ((*info)->argc < 5)
 	{
 		write(2, "Error : arguments is not enough!\n", 32);
-		return (0);
+		exit(1);
 	}
 	if (!ft_strncmp(argv[1], "here_doc", 9))
 	{
@@ -60,7 +42,7 @@ int	check_file(t_info **info, char **argv)
 		}
 		return (0);
 	}
-	if (!valid_file(info, argv))
-		return (0);
+	if (access(argv[1], R_OK))
+		perror_exit("Error :Check input file");
 	return (1);
 }

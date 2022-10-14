@@ -6,7 +6,7 @@
 #    By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/11 15:05:16 by yecsong           #+#    #+#              #
-#    Updated: 2022/10/13 19:43:52 by yecsong          ###   ########.fr        #
+#    Updated: 2022/10/14 13:37:10 by yecsong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,6 @@ SRCS := main.c\
 		utils.c\
 		check_file.c\
 		parsing.c
-
-OBJS = $(SRCS:%.c=%.o)
 
 AR := ar
 
@@ -35,7 +33,7 @@ $(NAME) : $(OBJS)
 		$(MAKE) -C ./libft all
 		$(MAKE) -C ./get_next_line all
 		cp ./libft/libft.a ./$(NAME)
-		$(CC) $(CFLAGS) $(OBJS) ./libft/libft.a ./get_next_line/get_next_line.a -o pipex
+		$(CC) $(CFLAGS) $(SRCS) ./libft/libft.a ./get_next_line/get_next_line.a -o pipex
 
 re : fclean all
 
