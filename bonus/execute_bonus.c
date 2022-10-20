@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:51:47 by yecsong           #+#    #+#             */
-/*   Updated: 2022/10/19 20:05:07 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:55:39 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	child_exec(t_info **info, char **argv, int fd[2], pid_t pid)
 
 	if (pid == 0 && (*info)->is_heredoc == 1 && (*info)->i == 1)
 	{
+		close(fd[0]);
 		temp_fd = open("/tmp/temp_pipex", O_RDONLY);
 		dup2(temp_fd, 0);
 		dup2(fd[1], 1);
@@ -40,6 +41,7 @@ void	child_exec(t_info **info, char **argv, int fd[2], pid_t pid)
 	}
 	else if (pid == 0 && (*info)->i == 0)
 	{
+		close(fd[0]);
 		in_fd = open(argv[1], O_RDONLY);
 		dup2(in_fd, 0);
 		dup2(fd[1], 1);
