@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:31:09 by yecsong           #+#    #+#             */
-/*   Updated: 2022/10/14 15:36:32 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/10/19 19:28:47 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-char	*read_fd(int fd[2])
+char	*read_fd(int fd)
 {
 	char	*temp;
 	char	*temp2;
@@ -21,7 +21,7 @@ char	*read_fd(int fd[2])
 	store = "";
 	while (1)
 	{
-		temp = get_next_line(fd[0]);
+		temp = get_next_line(fd);
 		if (!temp)
 			break ;
 		temp2 = ft_strjoin(store, temp);
@@ -46,4 +46,30 @@ void	perror_exit(char *str)
 {
 	perror(str);
 	exit(1);
+}
+
+void	free_dptr(char **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr[i] != NULL)
+	{
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
+}
+
+void	create_temp_file(char **argv)
+{
+	int		temp_fd;
+	char	*temp;
+
+	temp_fd = open("/tmp/temp_pipex", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	temp = parsing_heredoc(argv);
+	write(temp_fd, temp, ft_strlen(temp));
+	if (temp[0] != '\0')
+		free(temp);
+	close(temp_fd);
 }

@@ -6,22 +6,21 @@
 #    By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/11 15:05:16 by yecsong           #+#    #+#              #
-#    Updated: 2022/10/14 13:37:10 by yecsong          ###   ########.fr        #
+#    Updated: 2022/10/19 20:53:05 by yecsong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := pipex
 
-SRCS := main.c\
-		execute.c\
-		execute_2.c\
-		utils.c\
-		check_file.c\
-		parsing.c
+BONUS_SRCS := bonus/pipex_bonus.c\
+		bonus/execute_bonus.c\
+		bonus/utils_bonus.c\
+		bonus/check_file_bonus.c\
+		bonus/parsing_bonus.c
 
-AR := ar
-
-ARFLAGS := src
+SRCS := mandatory/pipex.c\
+		mandatory/execute.c\
+		mandatory/utils.c\
 
 CC := cc
 
@@ -29,11 +28,16 @@ CFLAGS := -Werror -Wextra -Wall
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
+ifdef BONUS_CHECK
+SRCS_FILES = $(BONUS_SRCS)
+else
+SRCS_FILES = $(SRCS)
+endif
+
+$(NAME) :
 		$(MAKE) -C ./libft all
 		$(MAKE) -C ./get_next_line all
-		cp ./libft/libft.a ./$(NAME)
-		$(CC) $(CFLAGS) $(SRCS) ./libft/libft.a ./get_next_line/get_next_line.a -o pipex
+		$(CC) $(CFLAGS) $(SRCS_FILES) ./libft/libft.a ./get_next_line/get_next_line.a -o pipex
 
 re : fclean all
 
@@ -49,5 +53,6 @@ fclean : clean
 
 bonus :
 	@make BONUS_CHECK=1 all
+
 
 .PHONY : all clean fclean bonus re
