@@ -2,7 +2,7 @@
 
 ## 필요개념
 
-프로세스, 파이프, Shell
+[프로세스](https://www.notion.so/Process-0ec2d67ca2864642aeddaedb752884c4?pvs=4), [System Call Function for pipe](https://www.notion.so/pipex-478409ba6fd7467285dcb79ff0e114d2?pvs=4), Shell
 
 `Pipex`에 사용되는 함수를 먼저 보고 사용해보면 과제의 흐름이 보입니다.
 
